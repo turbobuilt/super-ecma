@@ -5,12 +5,25 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Find source files
-file(GLOB_RECURSE SRC_FILES "src/*.cpp" "src/compiler/lexer/*.cpp")
+file(GLOB_RECURSE SRC_FILES
+    "src/*.cpp"
+    "src/compiler/lexer/*.cpp"
+    "src/compiler/ast/*.cpp" # Add AST source directory
+    "src/compiler/ast/statement.h" # Add new header (headers usually don't need explicit listing unless precompiled)
+)
 # Separate test sources explicitly
 file(GLOB TEST_RUNNER_SRC "tests/test_runner.cpp" "tests/test_runner_test.cpp")
 file(GLOB TEST_MAIN_SRC "tests/main.cpp")
 # Find future test case files
-file(GLOB_RECURSE TEST_CASE_FILES "tests/compiler/*.cpp" "tests/compiler/lexer/*.cpp" "tests/runtime/*.cpp" "tests/tools/*.cpp")
+file(GLOB_RECURSE TEST_CASE_FILES
+    "tests/compiler/*.cpp"
+    "tests/compiler/lexer/*.cpp"
+    "tests/compiler/ast/*.cpp" # Add AST test directory
+    "tests/compiler/ast/expression_test.cpp"
+    "tests/compiler/ast/statement_test.cpp" # Add new test file
+    "tests/runtime/*.cpp"
+    "tests/tools/*.cpp"
+)
 
 # Add executable for the main program
 add_executable(superecma ${SRC_FILES})
