@@ -23,14 +23,14 @@ This plan breaks down the SuperECMA implementation into small, verifiable, and t
 *   Task 15: AST Identifier Node
 *   Task 16: AST Variable Declaration Node
 *   Task 17: Parser Core & Basic Setup
+*   Task 18: Parse String Literal Expression
 
 **Current Task:**
 
-*   **Task 18: Parse String Literal Expression**
+*   **Task 19: Parse Function Call Expression (Simple, e.g., `print(...)`)**
 
 **Upcoming Tasks:**
 
-*   Task 19: Parse Function Call Expression (Simple, e.g., `print(...)`)
 *   Task 20: Basic Interpreter/Runtime Setup (Placeholder execution)
 *   Task 21: Implement Built-in `print` Function (Output to console)
 *   Task 22: Parse Basic Program Structure (Sequence of statements/expressions)

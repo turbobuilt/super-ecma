@@ -48,7 +48,35 @@ TEST_CASE(TestParserInitialization) {
 }
 
 // Add more test cases for parsing specific statements (Var, Return, etc.)
-// Example:
+
+// Test case for parsing a string literal expression
+TEST_CASE(TestParseStringLiteralExpression) {
+    std::string input = "\"hello world\";"; // Note: Escaped quotes for C++ string literal
+    Lexer lexer(input);
+    Parser parser(lexer);
+    auto program = parser.parseProgram();
+    checkParserErrors(parser);
+
+    ASSERT_TRUE(program != nullptr);
+    ASSERT_EQ(program->statements.size(), 1);
+
+    // Check the statement type
+    Statement* stmt = program->statements[0].get();
+    ASSERT_TRUE(stmt != nullptr);
+    ExpressionStatement* exprStmt = dynamic_cast<ExpressionStatement*>(stmt);
+    ASSERT_TRUE(exprStmt != nullptr);
+
+    // Check the expression type
+    Expression* expr = exprStmt->expression.get();
+    ASSERT_TRUE(expr != nullptr);
+    StringLiteral* strLiteral = dynamic_cast<StringLiteral*>(expr);
+    ASSERT_TRUE(strLiteral != nullptr);
+
+    // Check the value of the string literal
+    ASSERT_EQ(strLiteral->value, "hello world"); // AST value should not have quotes
+    ASSERT_EQ(strLiteral->tokenLiteral(), "\"hello world\""); // Token literal includes quotes
+}
+
 /*
 TEST_CASE(TestParseVarStatement) {
     std::string input = R"(
