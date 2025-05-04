@@ -67,10 +67,12 @@ TEST_CASE(TestTokenEquality) {
 // Test case for the Token's toString() method (optional but helpful)
 TEST_CASE(TestTokenToString) {
     Token token(TokenType::LParen, "(", 10, 20);
-    std::string expected = "Token(Type: LParen, Literal: "(", Line: 10, Column: 20)";
+    // Escape the inner double quotes
+    std::string expected = "Token(Type: LParen, Literal: \"(\", Line: 10, Column: 20)";
     ASSERT_EQ(token.toString(), expected);
 
     Token tokenIllegal; // Default constructor uses Illegal type
-    std::string expectedIllegal = "Token(Type: Illegal, Literal: "", Line: 0, Column: 0)";
-     ASSERT_EQ(tokenIllegal.toString(), expectedIllegal);
+    // Escape the inner double quotes
+    std::string expectedIllegal = "Token(Type: Illegal, Literal: \"\", Line: 0, Column: 0)";
+    ASSERT_EQ(tokenIllegal.toString(), expectedIllegal);
 }

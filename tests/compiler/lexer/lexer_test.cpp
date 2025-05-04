@@ -36,14 +36,13 @@ TEST_CASE(TestLexerEOF) {
     // Test with non-empty input that eventually reaches EOF
     {
         // Input: "a\nb"
-        // Expected: Illegal("a", 1, 1), Illegal("b", 2, 1), EOF("", 2, 2)
+        // Expected: Identifier("a", 1, 1), Identifier("b", 2, 1), EOF("", 2, 2)
         Lexer lexer("a\nb");
         Token t1 = lexer.nextToken(); // 'a'
         Token t2 = lexer.nextToken(); // 'b'
         Token t3 = lexer.nextToken(); // EOF
-
-        ASSERT_EQ(t1, Token(TokenType::Illegal, "a", 1, 1));
-        ASSERT_EQ(t2, Token(TokenType::Illegal, "b", 2, 1));
+        ASSERT_EQ(t1, Token(TokenType::Identifier, "a", 1, 1)); // Expect Identifier
+        ASSERT_EQ(t2, Token(TokenType::Identifier, "b", 2, 1)); // Expect Identifier
         ASSERT_EQ(t3, Token(TokenType::EndOfFile, "", 2, 2)); // EOF is after 'b' on line 2
     }
 }

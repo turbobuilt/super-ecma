@@ -6,6 +6,10 @@ set -e
 # Define build directory
 BUILD_DIR="build_test" # Use a separate build directory for tests if desired
 
+# Clean the build directory first
+echo "Cleaning previous build..."
+rm -rf $BUILD_DIR
+
 # Configure CMake
 echo "Configuring CMake..."
 cmake -S . -B $BUILD_DIR -DCMAKE_BUILD_TYPE=Debug # Add Debug flag for potentially better test debugging

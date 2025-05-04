@@ -21,7 +21,7 @@ private:
     int readPosition;       // Current reading position in input (after current char)
     char ch;                // Current char under examination
     int line;               // Current line number (1-based)
-    int column;             // Current column number (1-based, position of 'ch')
+    int column;             // Current column number (1-based, position of current 'ch')
 
     // Helper method to read the next character and advance position
     void readChar();

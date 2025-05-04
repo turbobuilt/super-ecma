@@ -6,6 +6,7 @@
 #include <functional>
 #include <iostream>
 #include <stdexcept> // Required for std::runtime_error
+#include <sstream>   // Include for std::ostringstream
 
 // Define a type for test functions
 using TestFunc = std::function<void()>;
@@ -47,9 +48,21 @@ inline bool RegisterTest(const std::string& name, TestFunc func) {
 
 #define ASSERT_EQ(a, b) \
     if (!((a) == (b))) { \
-        throw std::runtime_error("Assertion failed: " #a " == " #b " (" + std::to_string(a) + " vs " + std::to_string(b) + ") at " __FILE__ ":" + std::to_string(__LINE__)); \
+        std::ostringstream oss; \
+        oss << "Assertion failed: " #a " == " #b " ("; \
+        oss << (a) << " vs " << (b); \
+        oss << ") at " __FILE__ ":" << __LINE__; \
+        throw std::runtime_error(oss.str()); \
     }
-// Add more ASSERT macros as needed (e.g., ASSERT_NE, ASSERT_THROW)
+
+#define ASSERT_NE(a, b) \
+    if (!((a) != (b))) { \
+        std::ostringstream oss; \
+        oss << "Assertion failed: " #a " != " #b " ("; \
+        oss << (a) << " vs " << (b); \
+        oss << ") at " __FILE__ ":" << __LINE__; \
+        throw std::runtime_error(oss.str()); \
+    }
 
 // Function to run all registered tests
 int RUN_ALL_TESTS();

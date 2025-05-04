@@ -5,6 +5,7 @@
 #include <string>
 #include <string_view> // Added for keyword lookup
 #include <unordered_map>
+#include <ostream> // Include for ostream operator overload
 
 enum class TokenType {
     // Special Tokens
@@ -131,6 +132,12 @@ inline TokenType lookupIdentifier(std::string_view identifier) {
         return it->second; // Found a keyword
     }
     return TokenType::Identifier; // Not a keyword, must be an identifier
+}
+
+// Overload the << operator for std::ostream to allow printing TokenType enums
+inline std::ostream& operator<<(std::ostream& os, const TokenType& type) {
+    os << tokenTypeToString(type);
+    return os;
 }
 
 #endif // TOKEN_TYPES_H

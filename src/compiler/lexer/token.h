@@ -5,6 +5,7 @@
 #include "compiler/lexer/token_types.h" // Include the TokenType definition
 #include <string>
 #include <utility> // For std::move
+#include <ostream> // Include for ostream operator overload
 
 // Structure to represent a token produced by the lexer
 struct Token {
@@ -35,11 +36,18 @@ struct Token {
 
     // Helper function for string representation (useful for debugging)
     std::string toString() const {
+        // Correctly concatenate and quote the literal
         return "Token(Type: " + tokenTypeToString(type) +
-               ", Literal: "" + literal +
-               "", Line: " + std::to_string(line) +
+               ", Literal: \"" + literal + "\"" + // Add escaped quotes around literal
+               ", Line: " + std::to_string(line) +
                ", Column: " + std::to_string(column) + ")";
     }
 };
+
+// Overload the << operator for std::ostream to allow printing Token objects
+inline std::ostream& operator<<(std::ostream& os, const Token& token) {
+    os << token.toString(); // Use the existing toString method
+    return os;
+}
 
 #endif // TOKEN_H

@@ -1,1 +1,9 @@
 build/
+*.make
+*.cmake
+*.o
+*.o.d
+*.check_cache
+*.out
+*.a
+build_test/
