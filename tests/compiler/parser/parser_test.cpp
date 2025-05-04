@@ -77,6 +77,52 @@ TEST_CASE(TestParseStringLiteralExpression) {
     ASSERT_EQ(strLiteral->tokenLiteral(), "\"hello world\""); // Token literal includes quotes
 }
 
+// Test case for parsing a simple function call expression
+TEST_CASE(TestParseCallExpression) {
+    std::string input = "add(1, \"two\");";
+    Lexer lexer(input);
+    Parser parser(lexer);
+    auto program = parser.parseProgram();
+    checkParserErrors(parser);
+
+    ASSERT_TRUE(program != nullptr);
+    ASSERT_EQ(program->statements.size(), 1);
+
+    // Check the statement type
+    Statement* stmt = program->statements[0].get();
+    ASSERT_TRUE(stmt != nullptr);
+    ExpressionStatement* exprStmt = dynamic_cast<ExpressionStatement*>(stmt);
+    ASSERT_TRUE(exprStmt != nullptr);
+
+    // Check the expression type
+    Expression* expr = exprStmt->expression.get();
+    ASSERT_TRUE(expr != nullptr);
+    CallExpression* callExpr = dynamic_cast<CallExpression*>(expr);
+    ASSERT_TRUE(callExpr != nullptr);
+
+    // Check the function identifier
+    Identifier* funcIdent = dynamic_cast<Identifier*>(callExpr->function.get());
+    ASSERT_TRUE(funcIdent != nullptr);
+    ASSERT_EQ(funcIdent->value, "add");
+
+    // Check the number of arguments
+    ASSERT_EQ(callExpr->arguments.size(), 2);
+
+    // Check the first argument (IntegerLiteral - requires IntegerLiteral parsing to be added)
+    // TODO: Add check for IntegerLiteral once implemented
+    // Expression* arg1 = callExpr->arguments[0].get();
+    // IntegerLiteral* intLit = dynamic_cast<IntegerLiteral*>(arg1);
+    // ASSERT_TRUE(intLit != nullptr);
+    // ASSERT_EQ(intLit->value, 1);
+
+    // Check the second argument (StringLiteral)
+    Expression* arg2 = callExpr->arguments[1].get();
+    StringLiteral* strLit = dynamic_cast<StringLiteral*>(arg2);
+    ASSERT_TRUE(strLit != nullptr);
+    ASSERT_EQ(strLit->value, "two");
+}
+
+
 /*
 TEST_CASE(TestParseVarStatement) {
     std::string input = R"(

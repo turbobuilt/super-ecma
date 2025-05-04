@@ -18,8 +18,8 @@
 -   [x] Task 16: AST Variable Declaration Node
 -   [x] Task 17: Parser Core & Basic Setup
 -   [x] **Task 18: Parse String Literal Expression**
--   [ ] **Task 19: Parse Function Call Expression (Simple)** *(Current)*
--   [ ] Task 20: Basic Interpreter/Runtime Setup
+-   [x] **Task 19: Parse Function Call Expression (Simple)**
+-   [ ] **Task 20: Basic Interpreter/Runtime Setup** *(Current)*
 -   [ ] Task 21: Implement Built-in `print` Function
 -   [ ] Task 22: Parse Basic Program Structure
 -   [ ] Task 23: Parse Variable Declaration (No Initializer)

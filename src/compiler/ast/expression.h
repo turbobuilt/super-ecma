@@ -6,6 +6,8 @@
 #include <string>
 #include <cstdint> // For int64_t
 #include <utility> // For std::move
+#include <vector> // For std::vector
+#include <memory> // For std::unique_ptr
 
 // Base class for all expression nodes in the AST
 class Expression : public Node {
@@ -66,6 +68,32 @@ public:
     std::string tokenLiteral() const override { return token.literal; }
     // toString should represent the identifier's name
     std::string toString() const override { return value; }
+    void expressionNode() const override {} // Implement dummy marker
+};
+
+// Represents a function call expression, e.g., myFunction(arg1, arg2)
+class CallExpression : public Expression {
+public:
+    Token token; // The '(' token
+    std::unique_ptr<Expression> function; // Identifier or FunctionLiteral
+    std::vector<std::unique_ptr<Expression>> arguments;
+
+    // Constructor takes the token (usually '('), the function expression, and arguments
+    CallExpression(Token t, std::unique_ptr<Expression> func)
+        : token(std::move(t)), function(std::move(func)) {}
+
+    std::string tokenLiteral() const override { return token.literal; }
+    std::string toString() const override {
+        std::string out = function->toString() + "(";
+        for (size_t i = 0; i < arguments.size(); ++i) {
+            out += arguments[i]->toString();
+            if (i < arguments.size() - 1) {
+                out += ", ";
+            }
+        }
+        out += ")";
+        return out;
+    }
     void expressionNode() const override {} // Implement dummy marker
 };
 
